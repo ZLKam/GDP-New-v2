@@ -22,12 +22,13 @@ namespace taskProgress
         public static float heatFillAmount;
         public static float CO2FillAmount;
 
+        [SerializeField] GameObject taskbarObject;
         public static GameObject taskProgressBar;
         // Start is called before the first frame update
         void Start()
         {
-            taskProgressBar = transform.Find("TaskProgress").gameObject;
-            if (taskProgressBar.activeInHierarchy) 
+            taskProgressBar = taskbarObject;
+            if (taskProgressBar.activeInHierarchy)  
             {
                 taskProgressBar.SetActive(false);
             }
