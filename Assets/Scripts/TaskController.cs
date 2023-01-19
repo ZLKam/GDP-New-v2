@@ -10,6 +10,8 @@ public class TaskController : MonoBehaviour
 {
     [SerializeField] private List<string> tasks = new();
 
+    [SerializeField] private GameObject mornNewsUI;
+
     public Transform player;
     public TextMeshProUGUI taskHintText;
     public Button interactTaskButton;
@@ -54,11 +56,12 @@ public class TaskController : MonoBehaviour
             if (inProgress)
             {
                 joystick.gameObject.SetActive(false);
-                if (taskProgress.TaskProgress.taskCurrent >= taskProgress.TaskProgress.taskMaximum)
+                if (TaskProgress.taskCurrent >= TaskProgress.taskMaximum)
                 {
                     inProgress = false;
                     taskFinished = true;
-                    taskProgress.TaskProgress.taskProgressBar.SetActive(false);
+                    TaskProgress.taskProgressBar.SetActive(false);
+                    TaskProgress.taskCurrent = 0;
                 }
             }
             CheckPlayerInTask();
@@ -79,24 +82,52 @@ public class TaskController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (inProgress)
+        if (inProgress && currentTaskCollider.CompareTag("Task"))
         {
-            TaskProgress.taskCurrent += 0.5f;
-            TaskProgress.heatFillAmount += 0.5f * Time.deltaTime / TaskProgress.heatMaximum;
+            TaskProgress.taskCurrent += 0.2f;
+            TaskProgress.heatFillAmount += 10f * Time.deltaTime / TaskProgress.heatMaximum;
         }
+        else if (inProgress && currentTaskCollider.CompareTag("CookingTask"))
+        {
+            TaskProgress.taskCurrent += 2f;
+        }
+        else if (inProgress && currentTaskCollider.CompareTag("FoodTask")) 
+        {
+            TaskProgress.taskCurrent += 100f;
+            mornNewsUI.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else if (inProgress && currentTaskCollider.CompareTag("ExerciseTask"))
+        {
+            TaskProgress.taskCurrent += 0.3f;
+            TaskProgress.heatFillAmount += 12f * Time.deltaTime / TaskProgress.heatMaximum;
+        }
+        else if (inProgress && currentTaskCollider.CompareTag("InstantTask"))
+        {
+            TaskProgress.taskCurrent += 100f;
+        }
+
         if (HeatManager.airconOpen) 
         {
-            TaskProgress.heatFillAmount -= 0.8f * Time.deltaTime / TaskProgress.heatMaximum;
-            TaskProgress.CO2FillAmount += 0.5f * Time.deltaTime / TaskProgress.CO2Maximum;
+            TaskProgress.heatFillAmount -= 8f * Time.deltaTime / TaskProgress.heatMaximum;
+            TaskProgress.CO2FillAmount += 8f * Time.deltaTime / TaskProgress.CO2Maximum;
         }
         if (HeatManager.fanOpen)
         {
-            TaskProgress.heatFillAmount -= 0.5f * Time.deltaTime / TaskProgress.heatMaximum;
-            TaskProgress.CO2FillAmount += 0.1f * Time.deltaTime / TaskProgress.CO2Maximum;
+            TaskProgress.heatFillAmount -= 5f * Time.deltaTime / TaskProgress.heatMaximum;
+            TaskProgress.CO2FillAmount += 2f * Time.deltaTime / TaskProgress.CO2Maximum;
         }
         if (HeatManager.windowOpen)
         {
-            TaskProgress.heatFillAmount -= 0.1f * Time.deltaTime / TaskProgress.heatMaximum;
+            TaskProgress.heatFillAmount -= 2f * Time.deltaTime / TaskProgress.heatMaximum;
+        }
+        if (HeatManager.windowOpen && HeatManager.airconOpen) 
+        {
+            TaskProgress.CO2FillAmount += 10f * Time.deltaTime / TaskProgress.CO2Maximum;
+        }
+        if (HeatManager.windowOpen && HeatManager.airconOpen && HeatManager.fanOpen)
+        {
+            TaskProgress.CO2FillAmount += 20f * Time.deltaTime / TaskProgress.CO2Maximum;
         }
     }
 
@@ -195,7 +226,8 @@ public class TaskController : MonoBehaviour
     private void DoTask()
     {
         interactTaskButton.gameObject.SetActive(false);
-        taskProgress.TaskProgress.taskProgressBar.SetActive(true);
+        TaskProgress.taskProgressBar.SetActive(true);
+        //TaskProgress.taskProgressBar.transform.position = new Vector3(player.position.x, player.position.y + 2f + player.position.z);
         inProgress = true;
     }
 }

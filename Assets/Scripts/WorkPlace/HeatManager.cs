@@ -28,15 +28,15 @@ namespace HeatChecks
 
                 if (window != null && window.IsCollidingWith(startLinePos.x, startLinePos.y))
                 {
-                    windowOpen = true;
+                    windowOpen = !windowOpen;
                 }
                 if (fan != null && fan.IsCollidingWith(startLinePos.x, startLinePos.y))
                 {
-                    fanOpen = true;
+                    fanOpen = !fanOpen;
                 }
                 if (aircon != null && aircon.IsCollidingWith(startLinePos.x, startLinePos.y))
                 {
-                    airconOpen = true;
+                    airconOpen = !airconOpen;
                 }
             }
         }

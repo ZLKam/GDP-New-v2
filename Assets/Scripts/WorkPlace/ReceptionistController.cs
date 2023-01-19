@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ReceptionistController : MonoBehaviour
 {
-    [SerializeField] private GameObject PolicyUI;
+    [SerializeField] private GameObject policyUI;
+    [SerializeField] private GameObject mornNewsUI;
 
     private bool seenPolicy = false;
     // Start is called before the first frame update
     void Start()
     {
-        PolicyUI.SetActive(false);
+        policyUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -22,16 +23,21 @@ public class ReceptionistController : MonoBehaviour
     {
         if (collision.CompareTag("Player") && !seenPolicy) 
         {
-            PolicyUI.SetActive(true);
+            policyUI.SetActive(true);
             Time.timeScale = 0f;
             seenPolicy = !seenPolicy;
         }
     }
     public void ClosePressed()
     {
-        if (PolicyUI.activeInHierarchy)
+        if (policyUI.activeInHierarchy)
         {
-            PolicyUI.SetActive(false);
+            policyUI.SetActive(false);
+            Time.timeScale = 1f;
+        }
+        else if(mornNewsUI.activeInHierarchy)
+        {
+            mornNewsUI.SetActive(false);
             Time.timeScale = 1f;
         }
     }

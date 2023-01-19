@@ -8,6 +8,10 @@ TagManager:
   - Entrance
   - Task
   - Work Entrance
+  - FoodTask
+  - CookingTask
+  - ExerciseTask
+  - InstantTask
   layers:
   - Default
   - TransparentFX
