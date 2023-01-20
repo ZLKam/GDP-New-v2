@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using taskProgress;
 using HeatChecks;
@@ -197,6 +198,7 @@ public class TaskController : MonoBehaviour
         showedCompletedText = true;
         yield return new WaitForSeconds(5f);
         taskHintText.text = null;
+        SceneManager.LoadScene("Main Menu");
     }
 
     private void CheckCollision()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace taskProgress
 {
@@ -24,6 +25,10 @@ namespace taskProgress
 
         [SerializeField] GameObject taskbarObject;
         public static GameObject taskProgressBar;
+
+        public static bool heatDeath;
+        public static bool co2Death;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -48,10 +53,18 @@ namespace taskProgress
             heatMask.fillAmount = heatFillAmount;
             CO2Mask.fillAmount = CO2FillAmount;
 
-            if (heatMask.fillAmount >= 1f ||CO2Mask.fillAmount >= 1f)
+            if (heatMask.fillAmount >= 1f)
             {
                 Time.timeScale = 0;
-                Debug.Log("you died");
+                heatDeath = true;
+                SceneManager.LoadScene("Main Menu");
+                
+            }
+            else if(CO2Mask.fillAmount >= 1f)
+            {
+                Time.timeScale = 0;
+                co2Death = true;
+                SceneManager.LoadScene("Main Menu");
             }
             
             heatFillAmount = heatMask.fillAmount;

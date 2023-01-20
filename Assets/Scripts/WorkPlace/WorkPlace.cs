@@ -14,9 +14,10 @@ public class WorkPlace : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Player.transform.position = Entrance.transform.position;
+
         if (enterRoomBefore)
             return;
-        Player.transform.position = Entrance.transform.position;
         enterRoomBefore = true;
     }
 
@@ -24,8 +25,8 @@ public class WorkPlace : MonoBehaviour
     {
         if (HeatManager.airconOpen || HeatManager.fanOpen || HeatManager.windowOpen)
             return;
-        TaskProgress.heatCurrent = 1f * Time.deltaTime;
-        TaskProgress.CO2Current = 1f * Time.deltaTime;
+        TaskProgress.heatCurrent = 0.3f * Time.deltaTime;
+        TaskProgress.CO2Current = 0.3f * Time.deltaTime;
         TaskProgress.heatFillAmount += TaskProgress.heatCurrent * Time.deltaTime;
         TaskProgress.CO2FillAmount += TaskProgress.CO2Current * Time.deltaTime;
     }
