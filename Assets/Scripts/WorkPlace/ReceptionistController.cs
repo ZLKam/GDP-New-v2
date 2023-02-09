@@ -7,11 +7,12 @@ public class ReceptionistController : MonoBehaviour
     [SerializeField] private GameObject policyUI;
     [SerializeField] private GameObject mornNewsUI;
 
-    private bool seenPolicy = false;
+    public static bool seenPolicy = false;
     // Start is called before the first frame update
     void Start()
     {
         policyUI.SetActive(false);
+        ChangeSceneController.enteredWork = true;
     }
 
     // Update is called once per frame

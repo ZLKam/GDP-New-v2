@@ -13,6 +13,8 @@ public class DisplayDayText : MonoBehaviour
     public GameObject tutorialObject;
     public GameObject indicatorObject;
 
+    public static bool seenTutorial;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +39,7 @@ public class DisplayDayText : MonoBehaviour
         }
         dayText.gameObject.SetActive(true);
 
-        if (tutorialObject !=null)
+        if (tutorialObject != null && !seenTutorial)
         {
             tutorialObject.SetActive(true);
             Time.timeScale = 0;
@@ -69,5 +71,6 @@ public class DisplayDayText : MonoBehaviour
     {
         tutorialObject.SetActive(false);
         Time.timeScale = 1;
+        seenTutorial = true;
     }
 }

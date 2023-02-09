@@ -17,11 +17,18 @@ public class ChangeSceneController : MonoBehaviour
     
     public static bool touchingDoor = false;
 
+    public static bool enteredWork;
+
     private bool work = false;
 
     private void Start()
     {
         currentScreen = SceneManager.GetActiveScene().name;
+
+        if (enteredWork)
+        {
+            player.transform.position = transform.position;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
