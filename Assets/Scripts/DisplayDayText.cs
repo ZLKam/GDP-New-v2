@@ -8,7 +8,10 @@ public class DisplayDayText : MonoBehaviour
 {
     RandomEvent randomEvent;
 
-    public TextMeshProUGUI dayText;    
+    public TextMeshProUGUI dayText;
+
+    public GameObject tutorialObject;
+    public GameObject indicatorObject;
 
     // Start is called before the first frame update
     void Start()
@@ -33,12 +36,38 @@ public class DisplayDayText : MonoBehaviour
                 break;
         }
         dayText.gameObject.SetActive(true);
+
+        if (tutorialObject !=null)
+        {
+            tutorialObject.SetActive(true);
+            Time.timeScale = 0;
+        }
+
+        if (indicatorObject != null) 
+        {
+            StartCoroutine(RemoveIndicators());
+        }
+
+        
         StartCoroutine(ShowDayNumber());
     }
 
     IEnumerator ShowDayNumber()
     {
+        indicatorObject.SetActive(true);
+        yield return new WaitForSeconds(1);
+        indicatorObject.SetActive(false);
+    }
+
+    IEnumerator RemoveIndicators() 
+    {
         yield return new WaitForSeconds(1);
         dayText.gameObject.SetActive(false);
+    }
+
+    public void ExitTutorial() 
+    {
+        tutorialObject.SetActive(false);
+        Time.timeScale = 1;
     }
 }
