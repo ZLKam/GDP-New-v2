@@ -30,6 +30,10 @@ public class MainMenu : MonoBehaviour
         HeatManager.fanOpen = false;
         HeatManager.windowOpen = false;
 
+        DisplayDayText.seenTutorial = false;
+        ChangeSceneController.enteredWork = false;
+        ReceptionistController.seenPolicy = false;
+
         Time.timeScale = 1f;
 
         if (!TaskProgress.co2Death && !TaskProgress.heatDeath)

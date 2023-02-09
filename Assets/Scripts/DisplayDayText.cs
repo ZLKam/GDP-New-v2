@@ -11,7 +11,6 @@ public class DisplayDayText : MonoBehaviour
     public TextMeshProUGUI dayText;
 
     public GameObject tutorialObject;
-    public GameObject indicatorObject;
 
     public static bool seenTutorial;
 
@@ -44,24 +43,12 @@ public class DisplayDayText : MonoBehaviour
             tutorialObject.SetActive(true);
             Time.timeScale = 0;
         }
-
-        if (indicatorObject != null) 
-        {
-            StartCoroutine(RemoveIndicators());
-        }
-
         
         StartCoroutine(ShowDayNumber());
     }
 
-    IEnumerator ShowDayNumber()
-    {
-        indicatorObject.SetActive(true);
-        yield return new WaitForSeconds(1);
-        indicatorObject.SetActive(false);
-    }
 
-    IEnumerator RemoveIndicators() 
+    IEnumerator ShowDayNumber() 
     {
         yield return new WaitForSeconds(1);
         dayText.gameObject.SetActive(false);
